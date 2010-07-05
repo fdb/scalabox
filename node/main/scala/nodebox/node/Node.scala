@@ -1,20 +1,23 @@
 package nodebox.node
 
-
 class Node(
-        val prototype: Node,
+        val prototype: Option[Node],
         val name: String,
         val position: Position,
         val ports: List[Port],
         val nodes: List[Node],
         val connections: List[Connection]) {
 
+  def this(prototype: Node, name: String, position: Position, ports: List[Port], nodes: List[Node], connections: List[Connection]) = {
+    this(Some(prototype), name, position, ports, nodes, connections)
+  }
+
   def this(prototype: Node, name: String, position: Position, ports: List[Port]) = {
-    this(prototype, name, position, ports, List.empty, List.empty)
+    this(Some(prototype), name, position, ports, List.empty, List.empty)
   }
 
   private def this() = {
-    this(this, "root", Position(), List.empty, List.empty, List.empty, List.empty)
+    this(None, "root", Position(), List.empty, List.empty, List.empty)
   }
 
   override def toString() = name + " (" + prototype + ")"
